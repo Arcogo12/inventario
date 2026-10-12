@@ -1,27 +1,37 @@
 <?php
 require_once __DIR__ . '/../src/validaciones.php';
 
-$casos = [
+echo "<h3>Pruebas de validarNombreProducto()</h3>";
+
+$casosNombre = [
     ["Teclado", true],
     ["", false],
-    ["3", true],
-    ["Mouse", false]
+    ["     ", false],
+    ["Mouse", true],
 ];
 
-$aprobados = 0;
-$rechazados = 0;
+$aceptadas = 0;
+$rechazadas = 0;
 
-foreach ($casos as [$entrada, $esperado]) {
-    $obtenido = validarNombreProducto($entrada);
+foreach ($casosNombre as [$entrada, $esperado]) {
+    $resultado = validarNombreProducto($entrada);
+    $textoEntrada = $entrada === "" ? "'' (vacío)" : "'$entrada'";
 
-    if ($obtenido === $esperado) {
-        echo "PASS\n";
-        $aprobados++;
+    if ($resultado === true) {
+        $aceptadas++;
     } else {
-        echo "FAIL\n";
-        $rechazados++;
+        $rechazadas++;
+    }
+
+    if ($resultado === $esperado) {
+        echo "Prueba de nombre $textoEntrada pasó.<br>\n";
+    } else {
+        echo "Prueba de nombre $textoEntrada falló. Resultado esperado: " . ($esperado ? 'true' : 'false') . ", resultado obtenido: " . ($resultado ? 'true' : 'false') . "<br>\n";
     }
 }
 
-echo "\nAprobados: $aprobados\n";
-echo "Rechazados: $rechazados\n";
+echo "<br>";
+echo "<strong>Resumen de validación de nombres:</strong><br>\n";
+echo "Aceptadas: $aceptadas<br>\n";
+echo "Rechazadas: $rechazadas<br>\n";
+echo "Total evaluados: " . ($aceptadas + $rechazadas) . "<br>\n";
