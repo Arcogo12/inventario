@@ -12,10 +12,14 @@ $casosNombre = [
 
 $aceptadas = 0;
 $rechazadas = 0;
+$aprobadas = 0;
+$fallidas = 0;
 
 foreach ($casosNombre as [$entrada, $esperado]) {
     $resultado = validarNombreProducto($entrada);
-    $textoEntrada = $entrada === "" ? "'' (vacío)" : "'$entrada'";
+    $textoEntrada = trim($entrada) === ""
+        ? ($entrada === "" ? "'' (vacío)" : "'$entrada' (solo espacios)")
+        : "'$entrada'";
 
     if ($resultado === true) {
         $aceptadas++;
@@ -24,9 +28,11 @@ foreach ($casosNombre as [$entrada, $esperado]) {
     }
 
     if ($resultado === $esperado) {
+        $aprobadas++;
         echo "Prueba de nombre $textoEntrada pasó.<br>\n";
     } else {
-        echo "Prueba de nombre $textoEntrada falló. Resultado esperado: " . ($esperado ? 'true' : 'false') . ", resultado obtenido: " . ($resultado ? 'true' : 'false') . "<br>\n";
+        $fallidas++;
+        echo "Prueba de nombre $textoEntrada falló. Esperado: " . ($esperado ? 'true' : 'false') . ", obtenido: " . ($resultado ? 'true' : 'false') . "<br>\n";
     }
 }
 
@@ -35,3 +41,7 @@ echo "<strong>Resumen de validación de nombres:</strong><br>\n";
 echo "Aceptadas: $aceptadas<br>\n";
 echo "Rechazadas: $rechazadas<br>\n";
 echo "Total evaluados: " . ($aceptadas + $rechazadas) . "<br>\n";
+
+if ($fallidas > 0) {
+    exit(1);
+}
