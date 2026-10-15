@@ -21,15 +21,13 @@ foreach ($casos as $indice => [$entrada, $esperado]) {
     $numeroPrueba = $indice + 1;
     $obtenido = validarNombreProducto($entrada);
     $etiquetaEntrada = ($entrada === '' || trim($entrada) === '') ? "\"$entrada\"" : $entrada;
-    $resultado = $obtenido ? "paso" : "no paso";
 
     if ($obtenido === $esperado) {
         $aprobadas++;
-        echo "$etiquetaEntrada: $resultado\n";
+        echo "$etiquetaEntrada: paso\n";
     } else {
         $fallidas++;
-        $esperadoTexto = $esperado ? "paso" : "no paso";
-        echo "$etiquetaEntrada: $resultado (FALLÓ - Se esperaba: $esperadoTexto)\n";
+        echo "$etiquetaEntrada: no paso (falló)\n";
     }
 }
 
