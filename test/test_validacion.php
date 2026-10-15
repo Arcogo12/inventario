@@ -9,21 +9,32 @@ $casos = [
     ["Mouse", true],
 ];
 
+$totalCasos = count($casos);
 $total = 0;
 $aprobadas = 0;
 $fallidas = 0;
 
-foreach ($casos as [$entrada, $esperado]) {
+echo "Ejecutando $totalCasos pruebas de validación:\n\n";
+
+foreach ($casos as $indice => [$entrada, $esperado]) {
     $total++;
+    $numeroPrueba = $indice + 1;
     $obtenido = validarNombreProducto($entrada);
+    $etiquetaEntrada = ($entrada === '' || trim($entrada) === '') ? "\"$entrada\"" : $entrada;
+    $resultado = $obtenido ? "paso" : "no paso";
 
     if ($obtenido === $esperado) {
         $aprobadas++;
-        echo "PASS\n";
+        echo "$etiquetaEntrada: $resultado\n";
     } else {
         $fallidas++;
-        echo "FAIL\n";
+        $esperadoTexto = $esperado ? "paso" : "no paso";
+        echo "$etiquetaEntrada: $resultado (FALLÓ - Se esperaba: $esperadoTexto)\n";
     }
 }
 
 echo "\nPruebas realizadas: $total | Aprobadas: $aprobadas | Fallidas: $fallidas\n";
+
+if ($fallidas > 0) {
+    exit(1);
+}
