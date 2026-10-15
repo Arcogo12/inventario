@@ -14,7 +14,7 @@ $total = 0;
 $aprobadas = 0;
 $fallidas = 0;
 
-echo "Ejecutando $totalCasos pruebas de validación:\n\n";
+echo "Pasó las pruebas de esto:\n\n";
 
 foreach ($casos as $indice => [$entrada, $esperado]) {
     $total++;
